@@ -1,0 +1,120 @@
+\documentclass[12pt,letterpaper,fleqn]{hmcpset}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\input{macros.tex}
+
+% info for header block in upper right hand corner
+\name{}
+\class{Math189R SP19}
+\assignment{Homework 5}
+\duedate{Monday, Mar 11, 2019}
+
+\begin{document}
+
+Feel free to work with other students, but make sure you write up the homework
+and code on your own (no copying homework \textit{or} code; no pair programming).
+Feel free to ask students or instructors for help debugging code or whatever else,
+though.
+
+\begin{problem}[1]
+\textbf{(Murphy 12.5 - Deriving the Residual Error for PCA)} It may be helpful to reference
+section 12.2.2 of Murphy.
+\begin{enumerate}[(a)]
+    \item Prove that
+        \[
+            \left\|\xx_i - \sum_{j=1}^k z_{ij}\vv_j\right\|^2 = \xx_i^\T\xx_i - \sum_{j=1}^k\vv_j^\T \xx_i\xx_i^\T \vv_j.
+        \]
+        Hint: first consider the case when $k=2$. Use the fact that $\vv_i^\T\vv_j$ is 1 if $i=j$ and 0 otherwise.
+        Recall that $z_{ij} = \xx_i^\T\vv_j$.
+
+    \item Now show that
+        \[
+            J_k = \frac{1}{n}\sum_{i=1}^n \left(\xx_i^\T \xx_i - \sum_{j=1}^k\vv_j^\T \xx_i\xx_i^\T \vv_j\right) = \frac{1}{n}\sum_{i=1}^n \xx_i^\T\xx_i - \sum_{j=1}^k\lambda_j.
+        \]
+        Hint: recall that $\vv_j^\T \Sigmab \vv_j = \lambda_j\vv_j^\T\vv_j = \lambda_j$.
+
+    \item If $k=d$ there is no truncation, so $J_d=0$. Use this to show that the error from only using $k<d$
+        terms is given by
+        \[
+            J_k = \sum_{j=k+1}^d \lambda_j.
+        \]
+        Hint: partition the sum $\sum_{j=1}^d \lambda_j$ into $\sum_{j=1}^k \lambda_j$ and $\sum_{j=k+1}^d \lambda_j$.
+\end{enumerate}
+\end{problem}
+\begin{solution}
+a) I had to look at the solution for this one. Again, I'll summarize: \\
+\[
+            \left\|\xx_i - \sum_{j=1}^k z_{ij}\vv_j\right\|^2 = (\xx_i - \sum_{j=1}^k z_{ij}\vv_j)^T(\xx_i - \sum_{j=1}^k z_{ij}\vv_j)
+        \] \\
+ Simplify by bringing $\xx_{\ii}^T$ into the sum, and since $\vv_{\ii}^T \vv_{\jj} = 1$ if and only if $i = j$, we finally get:
+ \[
+ \xx_{\ii}^T \xx_{\ii} - \sum_{j=1}^k \vv_{\jj}^T \xx_{\ii} \xx_{\ii}^T \vv_{\jj}
+ \] as desired
+ 
+ b) \[ J_k = \frac{1}{n} \sum_{i=1}^n (\xx_{\ii}^T \xx_{\ii} - \sum_{j=1}^K \vv_{\jj}^T \xx_{\ii} \xx_{\ii}^T \vv_{\jj} ) \]
+ \[ = \frac{1}{n} \sum_{i=1}^n \xx_{\ii}^T \xx_{\ii} - \sum_{j=1}^k \vv_j^T \Sigma \vv_j \]
+ \[ = \frac{1}{n} \sum_{i=1}^n \xx_{\ii}^T \xx_{\ii} - \sum_{j=1}^k \lambda_j \]
+ 
+ c) Looked at the solutions for reference for this one.
+ We know that: 
+ \[ J_k = \frac{1}{n} \sum_{i=1}^n \xx_i^T \xx_i - \sum_{j=1}^d \lambda_j + \sum_{j=k+1}^d \lambda_j = \sum_{j=k+1}^d \lambda_j \]
+ As Prof Gu mentioned during lecture, the sum of the unused eigenvalues is equal to the reconstruction error of a PCA projection.
+
+ 
+\end{solution}
+\newpage
+
+
+
+\begin{problem}[2]
+\textbf{($\ell_1$-Regularization)} Consider the $\ell_1$ norm of a vector $\xx\in\RR^n$:
+\[
+    \|\xx\|_1 = \sum_i |\xx_i|.
+\]
+Draw the norm-ball $B_k = \{\xx : \|\xx\|_1 \leq k\}$ for $k=1$. On the same graph, draw the Euclidean norm-ball $A_k = \{\xx : \|\xx\|_2 \leq k\}$ for $k=1$ behind the first plot. (Do not need to write any code, draw the graph by hand).
+\newline
+\newline
+Show that the optimization problem
+\begin{align*}
+    \text{minimize: } & f(\xx)\\
+    \text{subj. to: } & \|\xx\|_p \leq k
+\end{align*}
+is equivalent to
+\begin{align*}
+    \text{minimize: } & f(\xx) + \lambda\|\xx\|_p
+\end{align*}
+
+(hint: create the Lagrangian). With this knowledge, and the plots given above, argue why
+using $\ell_1$ regularization (adding a $\lambda\|\xx\|_1$ term to the objective) will give
+sparser solutions than using $\ell_2$ regularization for suitably large $\lambda$.
+\end{problem}
+\begin{solution}
+Graph:
+\\
+\\
+\\
+\\ \\ \\ \\ \\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+Per the class notes, \[ inf sup L(\xx, \lambda) = inf sup f(\xx) + \lambda(||\xx||_p - k) \]
+Now, referring to the solution guide, we can flip the inf and the sup because it is in its dual, such that: 
+ \[ inf sup f(\xx) + \lambda(||\xx||_p - k) = sup g(\lambda) \]
+ By optimizing x, we will solve the minimization of $f(\xx) + \lambda||\xx||_p $ for some value of$ \lambda >= 0. $
+ After looking at the solution, I still don't quite understand what is going on. I will be sure to ask Prof Gu either during class or I will set up an appointment with her.
+\end{solution}
+
+
+
+
+
+\end{document}
